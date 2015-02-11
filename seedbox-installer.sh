@@ -35,8 +35,9 @@ perl -pi -e 's/"utp-enabled": true/"utp-enabled": true,/' /etc/transmission-daem
 sed -i "s#}# \"watch-dir\": \"/var/lib/transmission-daemon/watch/\",\n}#" settings.json
 sed -i "s#}# \"watch-dir-enabled\": true\n}#" settings.json
 
-# restart transmission with the new settings.
-invoke-rc.d transmission-daemon reload
+# restart transmission with the new settings this way, or settings
+# will be reverted to their previous state
+pkill -HUP transmission-da
 
 # Install and configure flexget.
 cd ~/
