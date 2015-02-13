@@ -3,7 +3,7 @@
 ## A simple script created by Jason McEachen to create a fully
 ## functional seedbox for getting and sharing torrented files
 ## from a base Ubuntu install.
-## Installs transmission, csf, and flexget 
+## Installs transmission, csf, and flexget
 ## Does configuration so that transmission/flexget can communicate
 ## and keeps csf from getting in the way.
 ###################################################################
@@ -13,6 +13,11 @@
 TRANSMISSION_USERNAME=swarm_user
 TRANSMISSION_PASSWORD=swarm_pass
 TRANSMISSION_PORT=9091
+
+## If you appreciate a low-fi monitoring setup change these values.
+ADD_SNMPD=false
+SNMPD_COMMUNITY=public
+SNMPD_REMOTE_IP=localhost
 
 # Update to current.
 apt-get update -y
@@ -68,3 +73,9 @@ sh install.sh
 # Start the service.
 service csf start
 
+# Install snmpd if ADD_SNMPD was changed to true.
+if [ $ADD_SNMPD -eq true ]; then
+  apt-get install snmpd
+  echo "rocommunity $SNMPD_COMMUNITY $SNMPD_REMOTE_IP" >> /etc/snmp/snmpd.conf
+  service snmpd restart
+fi
