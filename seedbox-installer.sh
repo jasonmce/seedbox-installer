@@ -69,7 +69,7 @@ wget http://www.configserver.com/free/csf.tgz
 tar -xzf csf.tgz
 cd csf
 sh install.sh
-
+# If they specified an SNMPD server, allow it through the firewall
 if [ $ADD_SNMPD -eq true ]; then
   echo "$SNMPD_REMOTE_IP # SNMPD server" >> /etc/csf/csf.allow
 fi
