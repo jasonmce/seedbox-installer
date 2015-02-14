@@ -69,8 +69,15 @@ wget http://www.configserver.com/free/csf.tgz
 tar -xzf csf.tgz
 cd csf
 sh install.sh
+
+if [ $ADD_SNMPD -eq true ]; then
+  echo "$SNMPD_REMOTE_IP # SNMPD server" >> /etc/csf/csf.allow
+fi
+
 echo "Change CSF config TESTING=1 and start the service for 5 minutes."
 echo "Once your config makes you happy, set TESTING=0 and restart to keep it running."
+
+
 
 # Install snmpd if ADD_SNMPD was changed to true.
 if [ $ADD_SNMPD -eq true ]; then
