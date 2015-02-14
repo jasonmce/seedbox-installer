@@ -69,9 +69,8 @@ wget http://www.configserver.com/free/csf.tgz
 tar -xzf csf.tgz
 cd csf
 sh install.sh
-
-# Start the service.
-service csf start
+echo "Change CSF config TESTING=1 and start the service for 5 minutes."
+echo "Once your config makes you happy, set TESTING=0 and restart to keep it running."
 
 # Install snmpd if ADD_SNMPD was changed to true.
 if [ $ADD_SNMPD -eq true ]; then
