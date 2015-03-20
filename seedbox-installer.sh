@@ -53,12 +53,10 @@ cd ~/
 python -V
 apt-get install python-pip -y
 pip install flexget
-which flexget
-pwd
-mkdir .flexget/909
-cd .flexget
-vi config.yml
-which flexget
+pip install --upgrade six # make sure the latest version of this python tool is available
+mkdir .flexget/
+touch .flexget/config.yml # Where the config will go
+# you can test with "flexget execute"
 
 # Create a directory to hold our flexgotten torrent files.
 mkdir /var/lib/transmission-daemon/watch
