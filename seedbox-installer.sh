@@ -6,22 +6,32 @@
 ## Installs transmission, csf, and flexget
 ## Does configuration so that transmission/flexget can communicate
 ## and keeps csf from getting in the way.
+##
+## You can preset values from the command line by typing
+## $ export TRANSMISSION_USERNAME=bettername
+## and the script will use those values instead of the defaults.
 ###################################################################
 #!/bin/bash
 
+# Takes a name and default value.  If $name is unset then gives it the value.
+set_default() {
+  if [ -z ${!1} ]; then
+    eval "$1=${2}"
+  fi
+}
+
 ## Please personalize the following three values!
-TRANSMISSION_USERNAME=swarm_user
-TRANSMISSION_PASSWORD=swarm_pass
-TRANSMISSION_PORT=9091
+set_default TRANSMISSION_USERNAME swarm_user
+set_default TRANSMISSION_PASSWORD swarm_pass
+set_default TRANSMISSION_PORT 9091
 
 ## If you appreciate a low-fi monitoring setup change these values.
-ADD_SNMPD=false
-SNMPD_COMMUNITY=public
-SNMPD_REMOTE_IP=localhost
+set_default ADD_SNMPD false
+set_default SNMPD_COMMUNITY public
+set_default SNMPD_REMOTE_IP localhost
 
 ## In case you like to run SSH on an alternate port
-SSH_PORT=22
-
+set_default SSH_PORT 22
 
 # Update to current.
 apt-get update -y
@@ -99,4 +109,4 @@ if [ $ADD_SNMPD -eq true ]; then
 fi
 
 ## Change SSH port if requested
-sed -i 's/^Port .*/Port $SSH_PORT/' /etc/ssh/sshd_config
+sed -i "s/^Port .*/Port $SSH_PORT/" /etc/ssh/sshd_config
