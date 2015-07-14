@@ -54,6 +54,10 @@ perl -pi -e 's/"utp-enabled": true/"utp-enabled": true,/' /etc/transmission-daem
 sed -i "s#}# \"watch-dir\": \"/var/lib/transmission-daemon/watch/\",\n}#" settings.json
 sed -i "s#}# \"watch-dir-enabled\": true\n}#" settings.json
 
+# Create the default download directory and set ownership.
+mkdir -p /home/debian-transmission/Downloads
+chown -R debian-transmission:debian-transmission /home/debian-transmission
+
 # restart transmission with the new settings this way, or settings
 # will be reverted to their previous state
 pkill -HUP transmission-da
