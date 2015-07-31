@@ -91,15 +91,15 @@ if [ $ADD_SNMPD -eq true ]; then
 fi
 
 ## Minimize our firewall holes to the bare minimum.
-sed -i 's/^TCP_IN =.*/TCP_IN = "$SSH_PORT,$TRANSMISSION_PORT,51413"/' csf.conf
-sed -i 's/^TCP_OUT =.*/TCP_OUT = "1:65535"/' csf.conf
+sed -i 's/^TCP_IN =.*/TCP_IN = "$SSH_PORT,$TRANSMISSION_PORT,49152:65535"/' csf.conf
+sed -i 's/^TCP_OUT =.*/TCP_OUT = "49152:65535"/' csf.conf
 ## Include SNMP ports if that service has been added.
 if [ $ADD_SNMPD -eq true ]; then
-  sed -i 's/^UDP_IN =.*/UDP_IN = "161,162,51413"/' csf.conf
+  sed -i 's/^UDP_IN =.*/UDP_IN = "161,162,49152:65535"/' csf.conf
 else
-  sed -i 's/^UDP_IN =.*/UDP_IN = "51413"/' csf.conf
+  sed -i 's/^UDP_IN =.*/UDP_IN = "49152:65535"/' csf.conf
 fi
-sed -i 's/^UDP_OUT =.*/UDP_OUT = "1:65535"/' csf.conf
+sed -i 's/^UDP_OUT =.*/UDP_OUT = "49152:65535"/' csf.conf
 
 echo "Change CSF config TESTING=1 and start the service for 5 minutes."
 echo "Once your config makes you happy, set TESTING=0 and restart to keep it running."
