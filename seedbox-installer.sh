@@ -45,6 +45,7 @@ add-apt-repository ppa:transmissionbt -y
 aptitude update
 aptitude install transmission-daemon -y
 perl -pi -e 's/"rpc-whitelist-enabled": true,/"rpc-whitelist-enabled": false,/' /etc/transmission-daemon/settings.json
+perl -pi -e 's/"rpc-authentication-required": false,/"rpc-authentication-required": true,/' /etc/transmission-daemon/settings.json
 perl -pi -e "s/\"rpc-port\": 9091,/\"rpc-port\": $TRANSMISSION_PORT,/" /etc/transmission-daemon/settings.json
 perl -pi -e "s/\"rpc-username(.)+/\"rpc-username\": \"$TRANSMISSION_USERNAME\",/g" /etc/transmission-daemon/settings.json
 perl -pi -e "s/\"rpc-password(.)+/\"rpc-password\": \"$TRANSMISSION_PASSWORD\",/g" /etc/transmission-daemon/settings.json
