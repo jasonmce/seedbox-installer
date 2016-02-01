@@ -108,7 +108,7 @@ echo "Once your config makes you happy, set TESTING=0 and restart to keep it run
 
 # Install snmpd if ADD_SNMPD was changed to true.
 if [ $ADD_SNMPD -eq true ]; then
-  apt-get install snmpd
+  apt-get install snmpd --yes
   echo "rocommunity $SNMPD_COMMUNITY $SNMPD_REMOTE_IP" >> /etc/snmp/snmpd.conf
   service snmpd restart
 fi
