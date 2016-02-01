@@ -44,6 +44,9 @@ add-apt-repository ppa:transmissionbt -y
 
 aptitude update
 aptitude install transmission-daemon -y
+# Stop the daemon before changing settings.
+service transmission-daemon stop
+# Modify settings file.
 perl -pi -e 's/"rpc-whitelist-enabled": true,/"rpc-whitelist-enabled": false,/' /etc/transmission-daemon/settings.json
 perl -pi -e 's/"rpc-authentication-required": false,/"rpc-authentication-required": true,/' /etc/transmission-daemon/settings.json
 perl -pi -e "s/\"rpc-port\": 9091,/\"rpc-port\": $TRANSMISSION_PORT,/" /etc/transmission-daemon/settings.json
@@ -59,9 +62,8 @@ sed -i "s#}# \"watch-dir-enabled\": true\n}#" settings.json
 mkdir -p /home/debian-transmission/Downloads
 chown -R debian-transmission:debian-transmission /home/debian-transmission
 
-# restart transmission with the new settings this way, or settings
-# will be reverted to their previous state
-pkill -HUP transmission-da
+# Restart transmission with the new settings.
+service transmission-daemon start
 
 # Install and configure flexget.
 cd ~/
